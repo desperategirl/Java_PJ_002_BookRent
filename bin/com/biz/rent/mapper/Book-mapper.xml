@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.biz.rent.mapper.BookDao">
+	
+	<select id="selectAll" resultType="com.biz.rent.persistence.BookDTO" >
+			SELECT	
+				B_CODE,
+				B_NAME,
+				B_AUTHER,
+				B_COMP,
+				B_YEAR,
+				B_IPRICE,
+				B_RPRICE
+
+			FROM tbl_books
+	</select>
+	
+	<select id="findById" resultType="BookDTO">
+			SELECT	
+				B_CODE,
+				B_NAME,
+				B_AUTHER,
+				B_COMP,
+				B_IPRICE,
+				B_RPRICE
+
+			FROM tbl_books
+			WHERE B_code = #{b_code}
+			
+	</select>
+	
+		<select id="findByBName" resultType="BookDTO">
+			SELECT	
+				B_CODE,
+				B_NAME,
+				B_AUTHER,
+				B_COMP,
+				B_IPRICE,
+				B_RPRICE
+
+			FROM tbl_books
+			WHERE B_NAME = #{name}
+			
+	</select>
+
+	<select id="findByName" resultType="BookDTO">
+			SELECT	
+				B_CODE,
+				B_NAME,
+				B_AUTHER,
+				B_COMP,
+				B_YEAR,
+				B_IPRICE,
+				B_RPRICE
+
+			FROM tbl_books
+			WHERE B_name LIKE '%' || #{b_name} || '%'
+	</select>
+	
+	<insert id="insert" parameterType="BookDTO" >
+		INSERT INTO 
+			tbl_books 
+			(B_CODE
+				B_NAME,
+				B_AUTHER,
+				B_COMP,
+				B_YEAR,
+				B_IPRICE,
+				B_RPRICE
+				)
+			VALUES(
+				'B' || LPAD(SEQ_BOOKS.NEXTVAL,4,0),
+				#{b_name},
+				#{b_comp},
+				#{b_writer},
+				#{b_price}
+			)
+	</insert>
+	<update id="update" parameterType="BookDTO">
+		UPDATE tbl_books SET
+		
+			B_NAME = #{b_name},
+			B_COMP = #{b_comp},
+			B_WRITER = #{b_writer},
+			B_PRICE = #{b_price}
+		
+		WHERE B_CODE = #{b_code}
+	</update>
+	<delete id="delete" parameterType="String">
+		DELETE FROM tbl_books
+		WHERE b_code = #{b_code}
+	</delete>
+	
+	
+</mapper>  
